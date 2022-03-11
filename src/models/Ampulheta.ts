@@ -1,10 +1,16 @@
-export default class Square {
+export default class Ampulheta {
   private size: number = 0;
   private lines: Array<string | null>[] = [];
+  private diagonal_principal: number[]=[];
+  private diagonal_secundaria: number[]=[];
 
   public setSize(n: string) {
     if (/^[^\d]$/.test(n)) {
-      throw new TypeError("Size must be a number");
+      throw new TypeError("Tamanho precisa ser um número");
+    }
+
+    if (parseInt(n)<20) {
+      throw new Error("Tamanho precisa ser maior ou igual a 20");
     }
 
     this.size = parseInt(n);
@@ -17,10 +23,27 @@ export default class Square {
       const line: string[] = new Array(this.size);
 
       line.fill(" ");
+      this.cruz(i,line);
+      this.preenchimento(i,line);
       this.lines.push(line);
     }
 
     return this;
+  }
+
+  private cruz(i:number,line:string[]){
+        const ponto1=i;
+        const ponto2=this.size-i-1;
+
+        line[ponto1]='#';
+        line[ponto2]='#';
+        this.diagonal_principal.push(ponto1);
+        this.diagonal_secundaria.push(ponto2);
+
+  }
+  private preenchimento (i:number,line:string[]){
+         line.fill('#',this.diagonal_principal[i],this.diagonal_secundaria[i]);
+
   }
 
   public traceBorders() {
@@ -42,6 +65,7 @@ export default class Square {
 
       // line.push("\n");
     }
+    
 
     return this;
   }

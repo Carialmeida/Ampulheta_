@@ -1,4 +1,4 @@
-import Square from "./models/Square";
+import Ampulheta from "./models/Ampulheta";
 
 const ON_DATA = "data";
 
@@ -9,10 +9,10 @@ class Main {
   }
 
   private onReceiveData(buffer: Buffer) {
-    const data = buffer.toString().replace(/[\r\n]/g, "");
+    const data = buffer.toString().replace(/[\r\n]/g, ""); /* expressão regular */
 
     try {
-      const square = new Square().setSize(data).toModel().traceBorders();
+      const square = new Ampulheta().setSize(data).toModel().traceBorders();
 
       square.print();
     } catch (err) {
